@@ -1,4 +1,3 @@
-
 "use client"
 
 import React, { useEffect, useState } from "react";
@@ -9,7 +8,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../../config/firebase.config";
+import { auth } from "../../config/firebase.config";
 
 import { Label } from "../ui/label";
 import { Envelope } from "../icons/Envelope";
@@ -40,12 +39,12 @@ type Props = {};
 
 const LoginForm = (props: Props) => {
 
-    const init = useAuthStore((state) => state.init)
-    const isLoading = useAuthStore((state) => state.isLoading)
-    const user = useAuthStore((state) => state.user)
-    useEffect(() => {
-        init();
-    }, []);
+    // const init = useAuthStore((state) => state.init)
+    // const isLoading = useAuthStore((state) => state.isLoading)
+    // const user = useAuthStore((state) => state.user)
+    // useEffect(() => {
+    //     init();
+    // }, []);
     const formDefaultValues = {
         email: "",
         password: "",
@@ -57,13 +56,14 @@ const LoginForm = (props: Props) => {
     })
 
     const router = useRouter()
+
     const setUser = useStore((state) => state.setUser)
     async function onSubmit(data: z.infer<typeof FormSchema>) {
 
-
+console.log(data)
         await signInWithEmailAndPassword(auth, formData.email, formData.password)
             .then((userCredential) => {
-                // Signed in 
+                // Signed in
                 const authUser = userCredential.user;
                 useStore.getState().setUser?.({
                     uid: authUser.uid,
@@ -79,6 +79,7 @@ const LoginForm = (props: Props) => {
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
+                console.error(`${errorCode}, ${errorMessage}`)
             });
     }
 
@@ -166,6 +167,3 @@ const LoginForm = (props: Props) => {
 };
 
 export default LoginForm;
-
-
-

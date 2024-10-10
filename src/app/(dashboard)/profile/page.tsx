@@ -1,11 +1,29 @@
+"use client"
 import ImageUpload from '@/components/profile/ImageUpload'
 import { ProfileForm } from '@/components/profile/ProfileForm'
 import { Button } from '@/components/ui/button'
 import React from 'react'
-
+import {signOut} from 'firebase/auth'
+import { useRouter } from 'next/navigation';
+import { auth } from "@/config/firebase.config";
+import {useStore} from "@/store/useStore"
 type Props = {}
 
 const Profile = (props: Props) => {
+const router=useRouter()
+    const user=useStore(state=>state.user)
+
+    if(!user){
+        router.push('/login')
+    }
+
+    const logOut=()=>{
+        signOut(auth).then(() => {
+   console.log("Sign-out successful").
+}).catch((error) => {
+   console.log("An error happened.")
+});
+    }
     return (
         <main className="bg-white h-f p-4 relative">
 
@@ -26,12 +44,15 @@ const Profile = (props: Props) => {
                 <ProfileForm />
             </div>
 
-            <div className="flex items-end h-auto absolute justify-end right-0">
+            <div className="flex items-end h-auto absolute justify-end r,ight-0">
 
 
                 <Button type="submit">Save</Button>
             </div>
+<div className="mt-7 w-full flex justify-center">
+    <Button type="submit" variant="destructive" onClick={logOut()}>Log Out</Button>
 
+</div>
         </main >
     )
 }

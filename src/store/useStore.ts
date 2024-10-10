@@ -1,4 +1,3 @@
-// import { Profile } from "./useStore";
 import { platforms } from "@/lib/platforms";
 import { create, StateCreator } from "zustand";
 import {
@@ -14,7 +13,7 @@ import {
 } from "firebase/firestore";
 import "firebase/firestore";
 import firebase from "firebase/app";
-import { db } from "../../config/firebase.config";
+import { db } from "../config/firebase.config";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useAuthStore } from "./useAuthStore";
 export interface FormType {
@@ -74,7 +73,7 @@ export const useStore = create<State & Action>((set, get) => ({
     displayName: null,
   },
   userData: null,
-  listenUser: async (uid) => {},
+  // listenUser: async (uid) => {},
   setUser: (userData) =>
     set((state: any) => ({ user: { ...state.user, ...userData } })),
 
@@ -99,30 +98,41 @@ export const useStore = create<State & Action>((set, get) => ({
     }
   },
   fetchUser: async (uid) => {
-    const userRef = doc(db, "users");
-    const userDoc = await getDoc(userRef);
-    console.log(userDoc);
-    if (userDoc.exists()) {
-      const userData = userDoc.data();
-      // const set = useSet();
-      set((state: State) => ({
-        ...state,
-        profile: userData.profile,
-        forms: userData.forms,
-        // user: {
-        //   uid: userData.uid,
-        //   email: userData.user.email,
-        //   displayName: userData.user.displayName,
-        // },
-      }));
-
-      set({ userData: userData });
-
-      console.log(userData);
-      // return userData;
-    } else {
-      console.error("User not found");
+    if(!uid){
+      console.error("Invalid Uid")
+      return;
     }
+    const userRef = doc(db, "users",uid);
+    const userDoc = await getDoc(userRef);
+    // console.log(userDoc);
+
+    try{
+      if (userDoc.exists()) {
+          const userData = userDoc.data();
+          // const set = useSet();
+          // set((state: State) => ({
+          //   ...state,
+          //   profile: userData.profile,
+          //   forms: userData.forms,
+          //   // user: {
+          //   //   uid: userData.uid,
+          //   //   email: userData.user.email,
+          //   //   displayName: userData.user.displayName,
+          //   // },
+          // }));
+
+          set({ userData: userData });
+
+          console.log(userData);
+            // return userData;
+        } else {
+          set({ userData: null });
+        }
+    } catch(error){
+          console.error(error)
+    }
+
+
   },
   addForm: async () => {
     const uid = get()?.user?.uid;
@@ -161,8 +171,13 @@ export const useStore = create<State & Action>((set, get) => ({
   },
   removeForm: async (id: number) => {
     const uid = get()?.user?.uid;
+
+    if(!uid){
+      console.error("Invalid Uid");
+return;
+    }
     try {
-      const userRef = doc(db, "users", uid);
+      const userRef = doc?.(db, "users", uid);
 
       const updatedForm = get()?.forms?.filter((form) => form.id !== id);
       const formWithUpdatedId = updatedForm?.map((form, i) => ({
@@ -181,10 +196,14 @@ export const useStore = create<State & Action>((set, get) => ({
   },
   setForm: async (id: number, updatedForm: Partial<FormType>) => {
     const uid = get()?.user?.uid; // Get the user ID from the store
-
+      if(!uid){
+      console.error("Invalid Uid");
+return;
+    }
     try {
       const userRef = doc(db, "users", uid);
-      const updatedForms = get().forms.map((form) =>
+      const updatedForms = get().
+      forms.map((form) =>
         form.id === id ? { ...form, ...updatedForm } : form
       );
       await updateDoc(userRef, {
@@ -200,7 +219,10 @@ export const useStore = create<State & Action>((set, get) => ({
 
   setProfile: async (field, value) => {
     const uid = get()?.user?.uid;
-
+if(!uid){
+      console.error("Invalid Uid");
+return;
+    }
     try {
       const userRef = doc(db, "users", uid);
       await updateDoc(userRef, {
@@ -260,6 +282,7 @@ const useFirestoreStore = create<State & Action>((set, get) => ({
   // Update user profile in Firestore
   updateProfile: async (field, value) => {
     const uid = get().user; // Get the user ID from the store
+
     if (uid) {
       const userRef = doc(db, 'users', uid);
       await updateDoc(userRef, {
@@ -268,8 +291,7 @@ const useFirestoreStore = create<State & Action>((set, get) => ({
           [field]: value,
         },
       });
-      set({
-        profile: {
+      set({ profile: {
           ...get().profile,
           [field]: value,
         },
@@ -277,10 +299,15 @@ const useFirestoreStore = create<State & Action>((set, get) => ({
     } else {
       // Handle case where user is not logged in
       console.error('User not logged in');
-    }
+ }
+
+
+
   },
 
+
   // Add a new form to Firestore
+  //These are some bunch of words that I'm using to practice vim
   addForm: async () => {
     const uid = get().user; // Get the user ID from the store
     if (uid) {

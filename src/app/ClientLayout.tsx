@@ -17,13 +17,15 @@ const ClientLayout = ({ children }: Props) => {
 
     const router = useRouter();
 
+    const fetchUser = useStore((state) => state.fetchUser)
     useEffect(() => {
         const auth = getAuth();
-        onAuthStateChanged(auth, (user) => {
+       const unSubscribe= onAuthStateChanged(auth, (user) => {
             if (user) {
-                // User is not signed in, redirect to login
-                // router.push('/links')
-                console.log(auth?.currentUser)
+
+        fetchUser?.(user?.uid)
+                router.push('/links')
+                // console.log(auth?.currentUser)
                 useStore.getState().setUser?.({
                     uid: user.uid,
                     email: user.email,
@@ -31,21 +33,15 @@ const ClientLayout = ({ children }: Props) => {
                 })
                 console.log(user.uid)
             } else {
+                //redirect to sign in
                 router.push('/login');
             }
-
-
         });
-    });
 
-    const fetchUser = useStore((state) => state.fetchUser)
-    const user = useStore((state) => state.user)
-
-    useEffect(() => {
-        const uid = user?.uid//"aI3lSvzwgiPbsA4McGjir4hHy5q2"
-        fetchUser?.(uid)
-
-    }, [user?.uid, fetchUser])
+        return()=>{
+            unSubscribe()
+        }
+    },[fetchUser]);
 
     // const route = useRouter()
     const pathname = usePathname();

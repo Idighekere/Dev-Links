@@ -1,6 +1,6 @@
 import { create, StateCreator } from "zustand";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../config/firebase.config";
+import { auth } from "../config/firebase.config";
 // import { auth } from ".config/firebase.config";
 export interface User {
   user: null;

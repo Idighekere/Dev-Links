@@ -5,13 +5,12 @@ import { useStore } from '@/store/useStore'
 import Image from 'next/image'
 import { Icon } from '@iconify/react/dist/iconify.js'
 // import { useStore } from 'zustand'
-import { storage } from '../../../config/firebase.config'
+import { storage } from '../../config/firebase.config'
 import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 
 type Props = {}
 
 const ImageUpload = (props: Props) => {
-    const imageRef = ref(storage, "images/")
     const [image, setImage] = useState<File | null>(null)
     const [imageFileUrl, setImageFileUrl] = useState("")
     const setImageURL = useStore(state => state.setImageURL)
@@ -24,12 +23,11 @@ const ImageUpload = (props: Props) => {
     // }, [image])
 
     const uploadImage = () => {
-
+const date=new Date().getTime()
+        const imageRef = ref(storage, `images/${date+image.name}`)
 
         if (image) {
-            const name = new Date().getTime() + image?.name
-            const imageRef = ref(storage, `${name}`)
-
+          
             const uploadTask = uploadBytesResumable(imageRef, image);
 
             // Get the download URL

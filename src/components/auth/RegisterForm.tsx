@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../../config/firebase.config";
+import { auth } from "@/config/firebase.config";
 
 import React, { useState } from "react";
 import { useRouter } from 'next/navigation'
@@ -78,7 +78,7 @@ const RegisterForm = (props: Props) => {
 
         await createUserWithEmailAndPassword(auth, formData.email, formData.password)
             .then((userCredential) => {
-                // Signed up 
+                // Signed up
                 const user = userCredential.user;
                 setUser?.(user)
                 console.log(user)
@@ -88,8 +88,21 @@ const RegisterForm = (props: Props) => {
             })
             .catch((error) => {
                 const errorCode = error.code;
-                const errorMessage = error.message;
+                let errorMessage = error.message;
                 // ..
+                switch(errorCode){
+                    case "auth/invalid-email":
+                        errorMessage="Please enter a valid email";
+                        break;
+                     case "auth/missing-password":
+                        errorMessage="Please enter a  password";
+                        break;
+                     case "auth/email-already-in-use":
+                        errorMessage="This email is already in use. Try another email";
+                        break;
+                    default:
+                        errorMessage="An error occured. Plesee try again"
+                }
                 console.log(errorMessage)
             });
         setFormData(formDefaultValues)
@@ -188,6 +201,3 @@ const RegisterForm = (props: Props) => {
 };
 
 export default RegisterForm;
-
-
-
