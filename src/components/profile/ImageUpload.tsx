@@ -23,8 +23,9 @@ const ImageUpload = (props: Props) => {
     // }, [image])
 
     const uploadImage = () => {
-const date=new Date().getTime()
-        const imageRef = ref(storage, `images/${date+image?.name}`)
+        const fileName = fileInputRef?.current?.files[0]?.name
+        const date = new Date().getTime()
+        const imageRef = ref(storage, `images/${date+fileName}`)
 
         if (image) {
 
