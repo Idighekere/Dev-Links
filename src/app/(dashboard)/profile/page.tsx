@@ -50,7 +50,7 @@ const router=useRouter()
                 <Button type="submit">Save</Button>
             </div>
 <div className="mt-7 w-full flex justify-center">
-    <Button type="submit" variant="destructive" onClick={logOut()}>Log Out</Button>
+    <Button type="submit" variant="destructive" onClick={logOut}>Log Out</Button>
 
 </div>
         </main >
