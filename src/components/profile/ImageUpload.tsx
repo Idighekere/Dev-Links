@@ -24,10 +24,10 @@ const ImageUpload = (props: Props) => {
 
     const uploadImage = () => {
 const date=new Date().getTime()
-        const imageRef = ref(storage, `images/${date+image.name}`)
+        const imageRef = ref(storage, `images/${date+image?.name}`)
 
         if (image) {
-          
+
             const uploadTask = uploadBytesResumable(imageRef, image);
 
             // Get the download URL
