@@ -132,8 +132,8 @@ return (
                                             <SelectValue
                                             placeholder={
                                                 field.value ? (<div className="flex gap-2 items-center">
-                                                    {generatePlatformIcon((field.value.name) )}
-                                                <span>{(field.value.name)}</span></div>) :("Select a platform")
+                                                    {generatePlatformIcon((field.value) )}
+                                                <span>{(field.value)}</span></div>) :("Select a platform")
                                             }
                                               />
                                         </SelectTrigger>
