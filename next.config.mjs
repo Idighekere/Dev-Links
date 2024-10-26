@@ -13,9 +13,16 @@ const nextConfig = {
         NEXT_PUBLIC_measurementId: process.env.NEXT_PUBLIC_measurementId,
 
     },
-    images: {
-        domains: ['firebasestorage.googleapis.com'],
-    },
+   
+images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'firebasestorage.googleapis.com',
+        pathname: '**',
+      },
+    ],
+  },
 };
 
 export default nextConfig;

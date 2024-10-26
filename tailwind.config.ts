@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      backgroundImage:{
+        'hero-pattern':"url('/hero.svg')"
+      },
       colors: {
         purple: "#633cff",
         "purple-hover": "#beadff",

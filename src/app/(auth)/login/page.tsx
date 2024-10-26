@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
 import Image from "next/image";
 import React from "react";
-import AuthHeader from "../../../components/auth/AuthHeader";
-import LoginForm from "../../../components/auth/LoginForm";
+import {AuthHeader,LoginForm} from "../_components";
+
 import {
   Card,
   CardHeader,
@@ -17,10 +17,12 @@ type Props = {};
 const Login = (props: Props) => {
   return (
     <main className="flex flex-col items-center justify-center">
+
       <AuthHeader />
+
       <div className="flex items-center justify-center">
-        <Card className="bg-white sdm:w-[470px] max-w-md w-full rounded-[12px] ">
-          <CardHeader>
+        <Card className="bg-white sm:w-[470px] max-w-md w-full rounded-[12px] md:p-3 ">
+          <CardHeader>          
             <CardTitle className="text-[2rem] font-[700]">Login</CardTitle>
             <CardDescription className="text-base ">
               Add your details below to get back into the app
@@ -38,11 +40,11 @@ const Login = (props: Props) => {
                 className="text-purple
                     e"
               >
-                {" "}
+
                 Create an account
               </Link>
             </span>
-          </CardFooter>{" "}
+          </CardFooter>
         </Card>
       </div>
     </main>

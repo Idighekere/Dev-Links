@@ -21,7 +21,11 @@
       "@/*": ["./src/*"],
       "@/config":["./src/config"],
       "@/components":["./src/components"],
-      "@/store":["./src/store"]
+      "@/store":["./src/store"],
+      "@/utils":["./src/utils"],
+      "@/types":["./src/types"],
+      "@/assets":["./src/assets"],
+      "@/hooks":["./src/hooks"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
