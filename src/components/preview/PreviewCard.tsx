@@ -43,7 +43,7 @@ export default function PreviewCard ({ userData, loading }: {userData:UserData |
       <PreviewInfo profile={profile} />
 
       <div className='/overflow-y-auto mt-5 /h-screen '>
-        <div className='flex flex-col w-full gap-5 items-center overflow-y-auto h-[18rem] /justify-center'>
+        <div className='flex flex-col w-full gap-5 items-center overflow-y-auto h-auto /justify-center'>
 
 
             {links?.map((link: Links) => (
