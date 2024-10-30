@@ -13,7 +13,7 @@ import {
 } from "firebase/firestore";
 import firebase from "firebase/app";
 import { db,storage } from "@/config/firebase.config";
-import useAuthStore from "./AuthStore";
+import {useAuthStore,useLinkStore,useProfileStore} from "@/store/";
 import {UserAction, UserState,UserData } from "@/types"
 
 
@@ -37,9 +37,15 @@ const useUserStore = create<UserState & UserAction>((set, get) => ({
 
       const unsubscribe=onSnapshot(userRef,(snapshot)=>{
         const userdata=snapshot?.data()
+        const linkData=snapshot?.data()?.links
             if(userdata){
-                set({userData:userdata})
+                set({userData:userdata as UserData})
+
+                //useProfileStore
             }
+            //const setInitialLinks =useLinkStore.getState().setInitialLinks
+                //setInitialLinks(linkData)
+
 
           })
 

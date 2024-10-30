@@ -21,41 +21,14 @@ const Profile = (props: Props) => {
   // const [loading, setLoading] = useState(false)
   const user = useAuthStore(state => state.currentUser)
   const userUid = user?.uid
-  const setInitialProfile = useProfileStore(state => state.setInitialProfile)
-  const getProfileData = useProfileStore(state => state.getProfileData)
+
   const hasChanges = useProfileStore(state => state.hasChanges)
-  const loading = useProfileStore(state=>state.loading)
-
-  // const fetchUserData = (userUid: string | undefined | null) => {
-
-  //     if (!userUid) {
-  //         console.error("Invalid Uid")
-  //         return;
-  //     }
-
-  //     setLoading(true)
-  //     const userRef = doc(db, "users", userUid);
-  //     // const docSnap = await getDoc(userRef);
-  //     //NOTE - OPted or onSnapshot due to relatime updates
-  //     const unsubscribe = onSnapshot(userRef, (docSnap) => {
-  //         if (docSnap.exists()) {
-  //             const profileData = docSnap.data()?.profile;
-  //             setInitialProfile(profileData)
-  //             setLoading(false)
-  //         } else {
-  //             console.error("Doc doesn't exist");
-  //             setInitialProfile({})
-  //             setLoading(false)
-  //         }
-
-  //     })
-
-  //     return unsubscribe
-  // }
+  const loading = useProfileStore(state => state.loading)
 
   useEffect(() => {
-    const getProfileData=useProfileStore.getState().getProfileData
+    const getProfileData = useProfileStore.getState().getProfileData
     getProfileData()
+    //console.log("Profile Rendered")
   }, [])
 
   //UPLOAD IMAGE
@@ -63,11 +36,12 @@ const Profile = (props: Props) => {
   const logOut = () => {
     signOut(auth)
       .then(() => {
-        console.log('Logged out successfully!')
+        //console.log('Logged out successfully!')
         showToastSuccess('Log-out success')
+        router.push('/login')
       })
       .catch(error => {
-        console.log('An error happened.')
+        //console.log('An error happened.')
         showToastError('Logged out failed')
       })
   }

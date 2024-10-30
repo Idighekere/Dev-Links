@@ -10,11 +10,11 @@ const NavLinks = [
   },
   {
     title: 'Features',
-    url: '/#features'
+    url: '#features'
   },
   {
     title: 'FAQ',
-    url: '/#faq'
+    url: '#faq'
   }
 ]
 export const Header = () => {
@@ -36,7 +36,7 @@ export const Header = () => {
         <ul className='md:flex gap-10 hidden '>
           {NavLinks.map(link => (
             <li key={link.title}>
-              <Link href={link.url}>{link.title}</Link>
+              <a href={link.url}>{link.title}</a>
             </li>
           ))}
         </ul>

@@ -2,8 +2,9 @@
 import React from "react"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
+import { Profile } from "@/types"
 
-const PreviewInfo = ({profile}) => {
+const PreviewInfo = ({profile}:{profile:Profile | undefined}) => {
 const pathname=usePathname()
 
   let style=""

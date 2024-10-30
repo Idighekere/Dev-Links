@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,7 +24,7 @@ export function LinkDeleteDialog({handleRemoveLink,isDialogOpen,setIsDialogOpen}
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction variant="ghost" onClick={handleRemoveLink}>Delete</AlertDialogAction>
+          <AlertDialogAction><Button variant="ghost" onClick={handleRemoveLink}>Delete</Button></AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

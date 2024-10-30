@@ -44,43 +44,42 @@ const PreviewPage = () => {
   const [userData, setUserData] = useState<null | UserData>(null)
   const [error, setError] = useState(false)
 
-
   useEffect(() => {
-   const fetchUserData = async () => {
-  if (!username) return
+    const fetchUserData = async () => {
+      if (!username) return
 
-  try {
-    setLoading(true)
+      try {
+        setLoading(true)
 
-    //TODO - Query firestore for the user with the specified username or email
-    const docRef = collection(db, 'users')
-    const q = query(docRef, where('profile.username', '==', username))
+        //TODO - Query firestore for the user with the specified username or email
+        const docRef = collection(db, 'users')
+        const q = query(docRef, where('profile.username', '==', username))
 
-    const querySnapshot = await getDocs(q)
-    console.log(querySnapshot)
-    console.log(q)
-    console.log(docRef)
-    if (querySnapshot.empty) {
-      console.log('No matching users found')
-      setError(true)
-      setUserData(null)
+        const querySnapshot = await getDocs(q)
+        //console.log(querySnapshot)
+        //console.log(q)
+        //console.log(docRef)
+        if (querySnapshot.empty) {
+          //console.log('No matching users found')
+          setError(true)
+          setUserData(null)
 
-      return
+          return
+        }
+
+        querySnapshot.forEach(doc => {
+          const data = doc.data()
+          setUserData(data as UserData)
+          setError(false)
+          //console.log(data)
+        })
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setLoading(false)
+      }
     }
-
-    querySnapshot.forEach(doc => {
-      const data = doc.data()
-      setUserData(data as UserData)
-      setError(false)
-      console.log(data)
-    })
-  } catch (error) {
-    console.error(error)
-  } finally {
-    setLoading(false)
-  }
-  }
-
+    fetchUserData()
   }, [username])
 
   if (loading) {

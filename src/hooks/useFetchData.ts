@@ -7,7 +7,7 @@ import {
 } from 'firebase/firestore'
 
 import { db } from "@/config/firebase.config"
-import { UserData } from "@/types/userData"
+import { UserData } from "@/types/"
 //:Promise<Error | null | UserData>
 export const FetchByUsername=async (username:string) =>{
 

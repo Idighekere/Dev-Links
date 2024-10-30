@@ -53,13 +53,13 @@ const Header = (props: Props) => {
         </div>
         <div>
           <Button variant='secondary'>
-            <Link href='/preview' className='flex items-center'>
+            <a href='/dashboard/preview' className='flex items-center'>
               <span className='md:hidden inline-block'>
                 {' '}
                 <Icon icon='iconamoon:eye-light' width='21' height='21' />
               </span>
               <p className='hidden md:block'>Preview</p>
-            </Link>
+            </a>
           </Button>
         </div>
       </nav>

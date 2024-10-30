@@ -4,7 +4,7 @@ import { Empty } from '@/components/icons'
 export const Potentials = () => {
   return (
     <section className='flex justify-center items-center /h-screen'>
-      <div className='w-full /h-full p-5 md:p-16 bg-white /justify-start items-center gap-16 inline-flex flex-col md:flex-row-reverse'>
+      <div className='w-full /h-full p-5 md:p-16 bg-white /justify-start items-center gap-16 inline-flex flex-col md:flex-row'>
 
         <div className=' w-full md:w-1/2 flex justify-center border-borders md:border rounded-md h-full'>
         <Empty width="350" height="100%"/>

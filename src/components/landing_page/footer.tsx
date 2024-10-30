@@ -10,7 +10,7 @@ const footerLinks = [
 ]
 
 export const Footer: React.FC = () => {
-  return (    <footer className='bg-dark-grey text-light-grey md:px-16 p-5'>
+  return (    <footer className='bg-dark-grey text-light-grey md:p-16 p-5'>
       <div className='/container mx-auto flex flex-col gap-8 md:grid md:grid-cols-2 lg:grid-cols-3 justify-center items-center md:items-start text-center md:text-left'>
         {/* Column 1: Logo */}
         <div className='flex flex-col items-center'>

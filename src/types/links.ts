@@ -1,28 +1,25 @@
-
 export interface Platform {
-  name: string;
-  url: string;
-  
+  name: string
+  url: string
 }
 
 export interface Links {
-  id: string;
-  platform: Platform;
+  id: string
+  platform:string
+  url: string
 }
 
-
 export interface LinkState {
-     initialLinks?: Links[];
-    links:Links[]
-    userData?: any;
-    hasChanges:boolean
+  initialLinks?: Links[]
+  links: Links[]
+  hasChanges: boolean
+  loading: boolean
 }
 
 export interface LinkAction {
-    addLink: () => void;
-    saveLink: () => Promise<void>;
-    removeLink: (id: string) => void;
-    updateLink: (id: string, updatedLink: Partial<Links>) => void;
-    setInitialLinks:(fetchedLinks:Links[])=>void
-
+  setLoading: (loading: boolean) => void
+  setLinks: (links: Links[]) => void
+  setInitialLinks: (fetchedLinks: Links[]) => void
+  getLinkData: () => Promise<(() => void) | undefined>
+  setHasChanges: (hasChanges: boolean) => void
 }

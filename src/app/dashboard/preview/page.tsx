@@ -1,7 +1,7 @@
 'use client'
 import { PreviewCard } from '@/components/preview'
 import { Button } from '@/components/ui/button'
-import { useUserStore } from '@/store'
+import { useAuthStore, useUserStore } from '@/store'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 
@@ -17,45 +17,46 @@ import { doc, getDoc, onSnapshot } from 'firebase/firestore'
 const Preview = () => {
   const pathname = usePathname()
   //const user = useUserStore((state) => state.user)
-  const [loading, setLoading] = useState(false)
-  const user = useUserStore(state => state.userData)
-  const [userData, setUserData] = useState()
+  //const [loading, setLoading] = useState(false)
+  const user = useAuthStore(state => state.currentUser)
+  //const [userData, setUserData] = useState()
+  const loading = useUserStore(state => state.loading)
+  const userData = useUserStore(state => state.userData)
+  // const userUid = user?.uid
+  // const fetchUserData = (userUid: string) => {
+  //   //console.log(userUid)
+  //   if (!userUid) {
+  //     console.error('Invalid Uid')
+  //     return
+  //   }
+  //   try {
+  //     setLoading(true)
+  //     const userRef = doc(db, 'users', userUid)
+  //     // const docSnap = await getDoc(userRef);
+  //     //NOTE - OPted or onSnapshot due to relatime updates
+  //     const unsubscribe = onSnapshot(userRef, docSnap => {
+  //       if (docSnap.exists()) {
+  //         const Data = docSnap.data()
+  //         setUserData(Data)
+  //       } else {
+  //         console.error("Doc doesn't exist")
+  //         //setUserData()
+  //       }
+  //     })
 
-  const userUid = user?.uid
-  const fetchUserData = (userUid: string) => {
-    console.log(userUid)
-    if (!userUid) {
-      console.error('Invalid Uid')
-      return
-    }
-    try {
-      setLoading(true)
-      const userRef = doc(db, 'users', userUid)
-      // const docSnap = await getDoc(userRef);
-      //NOTE - OPted or onSnapshot due to relatime updates
-      const unsubscribe = onSnapshot(userRef, docSnap => {
-        if (docSnap.exists()) {
-          const Data = docSnap.data()
-          setUserData(Data)
-        } else {
-          console.error("Doc doesn't exist")
-          //setUserData()
-        }
-      })
-
-      return unsubscribe
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setLoading(false)
-    }
-  }
+  //     return unsubscribe
+  //   } catch (error) {
+  //     console.error(error)
+  //   } finally {
+  //     setLoading(false)
+  //   }
+  // }
 
   useEffect(() => {
-    const unsubscribe = fetchUserData(userUid)
+    const getUserData = useUserStore.getState().getUserData
 
-    return () => unsubscribe && unsubscribe() //cleanup listener on unmount
-  }, [userUid])
+    getUserData()
+  }, [])
 
   const getSharableLink = () => {
     return `${window.location.origin}/profile/${userData?.profile?.username}`
@@ -105,18 +106,14 @@ const Preview = () => {
     <div className='//mb-20'>
       <div className='sm:bg-purple lg:max-h-64 rounded-bl-lg rounded-br-lg md:max-h-32 md:p-8 sm:pb-[10rem] md:pb-[16rem] p-4  relative'>
         <div
-          className={`${
-            pathname == '/preview' ? 'justify-between' : 'justify-end'
-          } bg-white rounded-md flex  sm:p-8 gap-3 p-4`}
+          className={`justify-between bg-white rounded-md flex  sm:p-8 gap-3 p-4`}
         >
-          {userData?.uid && (
-            <Button variant='outline' className='w-full md:w-auto'>
-              <Link href='/links'>Back to Editor</Link>
-            </Button>
-          )}
+          <Button variant='outline' className='w-full md:w-auto'>
+            <Link href='/dashboard/links'>Back to Editor</Link>
+          </Button>
 
           <Button
-            className='/w-full sm:w-auto self-end'
+            className='w-full sm:w-auto self-end'
             onClick={copyLinkToClipboard}
           >
             Share Link

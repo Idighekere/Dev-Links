@@ -13,52 +13,16 @@ import { doc, getDoc, onSnapshot } from 'firebase/firestore'
 const Links = () => {
   //const [loading, setLoading] = useState(false)
   const userData = useUserStore(state => state.userData)
-  //const userUid = user?.uid
-  const setInitialLinks = useLinkStore(state => state.setInitialLinks)
+
   const hasChanges = useLinkStore(state => state.hasChanges)
-const links=userData?.links
-const loading = useUserStore.getState()?.loading
-  //const getUserData = useUserStore(state => state.getUserData)
-useEffect(() => {
-  const getUserData=useUserStore.getState().getUserData
-  getUserData()
-}, [])
+  const links = useLinkStore(state => state.links)
+  const loading = useUserStore.getState()?.loading
 
-  // const links = useLinkStore(state => state.links)
-  // const fetchUserData = (userUid: string) => {
-  //   if (!userUid) {
-  //     console.error('Invalid Uid')
-  //     return
-  //   }
-
-  //   setLoading(true)
-  //   const userRef = doc(db, 'users', userUid)
-  //   // const docSnap = await getDoc(userRef);
-  //   //NOTE - OPted or onSnapshot due to relatime updates
-  //   const unsubscribe = onSnapshot(userRef, docSnap => {
-  //     if (docSnap.exists()) {
-  //       const linksData = docSnap.data()?.links
-  //       setInitialLinks(linksData)
-  //       setLoading(false)
-  //     } else {
-  //       console.error("Doc doesn't exist")
-  //       setInitialLinks([])
-  //       setLoading(false)
-  //     }
-  //   })
-
-  //   return unsubscribe
-  // }
-
-  // useEffect(() => {
-  //   const unsubscribe = fetchUserData(userUid)
-
-  //   return () => {
-  //     if (unsubscribe) {
-  //       unsubscribe() //cleanup listener on unmount
-  //     }
-  //   }
-  // }, [userUid])
+  useEffect(() => {
+    const getLinkData = useLinkStore.getState().getLinkData
+    getLinkData()
+    //console.log("Link rendered")
+  }, [])
 
   if (loading) {
     return (
@@ -70,7 +34,7 @@ useEffect(() => {
   }
   return (
     <div>
-      <LinkEditorCard links={links} hasChanges={hasChanges} loading={loading}/>
+      <LinkEditorCard links={links} hasChanges={hasChanges} loading={loading} />
       {/* <LinkRouteSkeleton/> */}
     </div>
   )

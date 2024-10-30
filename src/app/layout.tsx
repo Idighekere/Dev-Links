@@ -24,12 +24,12 @@ export default function RootLayout ({
       </head>
       <body className={inter.className}>
         <Toaster position='top-right' />
-        <Providers>
+        {/* <Providers> */}
           <ClientLayout>
             {children}
             {/* <Footer/> */}
           </ClientLayout>
-        </Providers>
+        {/* </Providers> */}
       </body>
     </html>
   )
