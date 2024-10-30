@@ -8,7 +8,10 @@ const AuthHeader = (props: Props) => {
 
 
         <div className='flex justify-center mt-14 md:mt-20 mb-6 md:mb-10'>
+            <a href="/">
+
         <LogoWithText/>
+            </a>
         </div>
 )
 }
