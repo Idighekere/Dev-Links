@@ -88,7 +88,7 @@ const PreviewPage = () => {
         <div className='sm:bg-purple lg:max-h-64 rounded-bl-lg rounded-br-lg md:max-h-32 md:p-8 sm:pb-[10rem] md:pb-[16rem] p-4  relative'>
           <div
             className={`${
-              pathname == '/preview' ? 'justify-between' : 'justify-end'
+              pathname == '/dashboard/preview' ? 'justify-between' : 'justify-end'
             } bg-white rounded-md flex  sm:p-8 gap-3 p-4`}
           >
             <Skeleton className='h-9 w-full sm:w-32 self' />
@@ -131,7 +131,7 @@ const PreviewPage = () => {
         <div className='sm:bg-purple lg:max-h-64 rounded-bl-lg rounded-br-lg md:max-h-32 md:p-8 sm:pb-[10rem] md:pb-[16rem] p-4  relative'>
           <div
             className={`${
-              pathname == '/preview' ? 'justify-between' : 'justify-end'
+              pathname == '/dashboard/preview' ? 'justify-between' : 'justify-end'
             } bg-white rounded-md flex  sm:p-8 gap-3 p-4`}
           >
             <Button

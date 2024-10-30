@@ -23,7 +23,7 @@ const pathname = usePathname()
 
   useAuthListener()
   useEffect(() => {
-    if (!currentUser && loading) {
+    if (!currentUser) {
       router.replace('/login')
     }
   }, [router, currentUser,loading])
