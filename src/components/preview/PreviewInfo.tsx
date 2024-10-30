@@ -15,7 +15,7 @@ if(pathname==="/dashboard/profile"|| pathname=="/dashboard/links"){
              <div className="flex flex-col /space-x-4 /space-y-8 items-center justify-center">
 
                 <div className="relative  rounded-full  h-[96px] w-[96px] self- flex justify-center items-center mb-4 border-2 border-purple ">
-                {profile?.imageUrl ?  <Image alt={`${profile?.firstName}'s image`} src={`${profile?.imageUrl} `} className="rounded-full object-cover h-40 w-40 " fill /> : ("No Image")}
+                {profile?.imageUrlFromStorage ?  <Image alt={`${profile?.firstName}'s image`} src={`${profile?.imageUrlFromStorage} `} className="rounded-full object-cover h-40 w-40 " fill /> : ("No Image")}
 
 
 
