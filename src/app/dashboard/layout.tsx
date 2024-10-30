@@ -26,7 +26,7 @@ const pathname = usePathname()
     if (!currentUser) {
       router.replace('/login')
     }
-  }, [router, currentUser,loading])
+  }, [router, currentUser])
 
   if (loading ) {
     return (
