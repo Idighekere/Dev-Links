@@ -22,7 +22,7 @@ export const Contribute = () => {
           </p>
           <Button size='lg'>
             <Link
-              href='https://github.com/idighekere/'
+              href='https://github.com/Idighekere/Link-sharing-app-for-Devs'
               className='flex gap-4 items-center text-[1rem] font-semibold'
             >
               <Icon icon='simple-icons:github' width="1rem" height="1rem" />
