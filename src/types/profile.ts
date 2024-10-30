@@ -3,7 +3,7 @@ export interface Profile {
   firstName?: string
   lastName?: string
   email?: string
-  imageFile?: File | null
+  imageUrlFromStorage?: any;
   username?: string
 }
 
