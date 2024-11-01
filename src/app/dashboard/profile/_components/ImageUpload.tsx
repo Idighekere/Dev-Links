@@ -13,7 +13,11 @@ import {
 } from 'firebase/storage'
 import { doc } from 'firebase/firestore'
 import { db, storage } from '@/config/firebase.config'
-import { showToastError } from '@/utils/showToast'
+import {
+  showToastError,
+  showToastLoading,
+  showToastSuccess
+} from '@/utils/showToast'
 import ImagePreview from './ImagePreview'
 
 type Props = {
@@ -76,16 +80,21 @@ const ImageUpload = ({ userUid }: Props) => {
     setUploading(true)
     if (!userUid) {
       console.error('Undefined Uid')
+      showToastError('User UID is not defined.') // Provide user feedback
+      setUploading(false) // Stop uploading state
       return
     }
     const userRef = doc(db, 'users', userUid)
-    const date = new Date()
-    const imageRef = ref(storage, `${userUid}/${date}`)
+    const date = new Date().toISOString()
+    const imageRef = ref(storage, `${userUid}/${image?.name}-${date}`)
 
     const validFormats = ['image/jpeg', 'image/png']
 
     if (!image || !validFormats?.includes(image?.type)) {
       console.error('Invalid file format.Only JPG & PNG are allowed')
+      showToastError('Invalid file format. Only JPG & PNG are allowed.') // User feedback
+      setUploading(false) // Stop uploading state
+
       return
     }
 
@@ -97,16 +106,24 @@ const ImageUpload = ({ userUid }: Props) => {
         const url = await getDownloadURL(imageRef)
         setBlobUrl(url)
         setImageURL?.(url)
+
         //console.log(url)
       } else {
         console.error('No Image file provided')
       }
       //console.log('Uploaded')
+
+      //setImage(null)
     } catch (error) {
       console.error(error)
     } finally {
+      showToastSuccess('Image upload success!')
       setUploading(false)
     }
+  }
+
+  if (uploading) {
+    showToastLoading('Uploading...')
   }
   return (
     <div className='flex flex-col gap-2'>
@@ -122,6 +139,7 @@ const ImageUpload = ({ userUid }: Props) => {
         blobUrl={blobUrl}
         onClick={handleButtonClick}
         profileImageUrl={profile?.imageUrl}
+        image={image}
       />
 
       <>

@@ -22,11 +22,11 @@ function DashboardLayout ({ children }: { children: React.ReactNode }) {
 const pathname = usePathname()
 
   useAuthListener()
-  useEffect(() => {
-    if (!currentUser) {
-      router.replace('/login')
-    }
-  }, [router, currentUser])
+  // useEffect(() => {
+  //   if (!currentUser) {
+  //     router.replace('/login')
+  //   }
+  // }, [router, currentUser])
 
   if (loading ) {
     return (
@@ -37,9 +37,9 @@ const pathname = usePathname()
   }
 
   // if(isUserValid){
-  if(!currentUser && loading){
-    return null
-  }
+  // if(!currentUser && loading){
+  //   return null
+  // }
   if(pathname==="/dashboard/preview"){
 
     return <>{children}</>

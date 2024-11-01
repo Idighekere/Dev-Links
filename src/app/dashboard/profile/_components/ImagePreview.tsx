@@ -6,17 +6,18 @@ type Props = {
   blobUrl: string | null
   onClick: () => void
   profileImageUrl: any //string | null
+  image:File| null
 }
 
-const ImagePreview = ({ blobUrl, onClick, profileImageUrl }: Props) => {
+const ImagePreview = ({ blobUrl, onClick, profileImageUrl,image }: Props) => {
   return (
     <div
-      className='mt-2 bg-light-purple relative w-40 h-40 rounded-md p-5 flex items-center '
+      className='mt-2 bg-light-purple relative w-40 h-40 rounded-md p-5 flex items-center cursor-pointer select-none'
       onClick={onClick}
     >
-      {(profileImageUrl || blobUrl) && (
+      {(blobUrl||profileImageUrl) && (
         <Image
-          src={profileImageUrl || blobUrl || ''}
+          src={image ? blobUrl : profileImageUrl || ''}
           alt='Preview'
           fill
           className={`
@@ -27,7 +28,7 @@ const ImagePreview = ({ blobUrl, onClick, profileImageUrl }: Props) => {
 
       {/* Overlay for Select Image */}
       <div
-        className={`absolute inset-0 flex items-center justify-center rounded-md ${
+        className={`absolute inset-0 flex items-center justify-center rounded-md flex-col gap-4 ${
           blobUrl || profileImageUrl ? 'hidden' : 'bg-black bg-opacity-50'
         }`}
       >

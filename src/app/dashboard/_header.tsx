@@ -43,7 +43,7 @@ const Header = (props: Props) => {
             <Button
               variant='ghost'
               className={`${
-                pathname == 'dashboard/profile' ? 'bg-light-purple text-purple ' : ''
+                pathname == '/dashboard/profile' ? 'bg-light-purple text-purple ' : ''
               } flex items-center gap-2`}
             >
               <Icon icon='codicon:account' width='21' height='21' />

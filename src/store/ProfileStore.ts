@@ -16,7 +16,7 @@ import {
 const useProfileStore = create<ProfileState & ProfileAction>((set, get) => ({
   userData: useUserStore.getState().userData,
   profile: {
-    imageUrlFromStorage: '',
+    //imageUrlFromStorage: '',
     firstName: '',
     lastName: '',
     email: '',
@@ -60,47 +60,6 @@ const useProfileStore = create<ProfileState & ProfileAction>((set, get) => ({
     return () => {
       unsubscribe()
     }
-  },
-
-  uploadImage: async imageFile => {
-    const uid = useAuthStore.getState().currentUser?.uid
-    if (!uid) {
-      console.error('Invalid Uid')
-      //console.log(uid)
-      return
-    }
-    //TODO - Validate Image Format and dimensions
-
-    const validFormats = ['image/jpeg', 'image/png']
-    const maxWidth = 1024
-    const maxHeight = 1024
-
-    if (!validFormats.includes(imageFile.type)) {
-      console.error('Invalid file format.Only JPN & PNG are allowed')
-      return
-    }
-    const img = new Image()
-    const objectUrl = URL.createObjectURL(imageFile)
-    //console.log(objectUrl)
-    img.src = objectUrl
-    await new Promise(resolve => {
-      img.onload = () => {
-        if (img.width > maxWidth || img.height > maxHeight) {
-          console.error('Imagee dimension should not exceed 1024px x 1024px')
-          URL.revokeObjectURL(objectUrl)
-          resolve(false) //reject promise
-        } else {
-          set({
-            profile: {
-              ...get().profile,
-              imageUrl: objectUrl //set preview url
-            }
-          })
-          URL.revokeObjectURL(objectUrl)
-          resolve(true) //resolve promise
-        }
-      }
-    })
   },
 
   saveProfile: async () => {
@@ -151,7 +110,7 @@ const useProfileStore = create<ProfileState & ProfileAction>((set, get) => ({
     set(state => ({
       profile: {
         ...state.profile,
-        imageUrlFromStorage: imageUrl
+      imageUrl
       },
       hasChanges: true
     }))

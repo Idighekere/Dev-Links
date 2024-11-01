@@ -11,7 +11,7 @@ import ProfileRouteSkeleton from './_skeleton'
 import { db, storage } from '@/config/firebase.config'
 import { doc, getDoc, onSnapshot } from 'firebase/firestore'
 
-import { showToastSuccess, showToastError } from '@/utils/showToast'
+import { showToastSuccess, showToastError, showToastWarning, showToastLoading } from '@/utils/showToast'
 type Props = {}
 
 const Profile = (props: Props) => {
@@ -25,6 +25,14 @@ const Profile = (props: Props) => {
   const hasChanges = useProfileStore(state => state.hasChanges)
   const loading = useProfileStore(state => state.loading)
 
+
+useEffect(()=>{
+
+  if(hasChanges){
+      showToastWarning("You have unsaved changes. Don't forget to save!")
+    }
+  },[hasChanges])
+
   useEffect(() => {
     const getProfileData = useProfileStore.getState().getProfileData
     getProfileData()
@@ -33,7 +41,11 @@ const Profile = (props: Props) => {
 
   //UPLOAD IMAGE
 
-  const logOut = () => {
+  const logOut = async() => {
+    const response=await fetch("/api/logout",{
+      method:"POST"
+    })
+
     signOut(auth)
       .then(() => {
         //console.log('Logged out successfully!')
@@ -44,6 +56,14 @@ const Profile = (props: Props) => {
         //console.log('An error happened.')
         showToastError('Logged out failed')
       })
+
+      //clear cookies in the server
+
+      if(response.status===200){
+        router.replace("/login")
+      }
+
+
   }
 
   const handleSaveLink = () => {

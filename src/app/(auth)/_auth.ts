@@ -2,23 +2,22 @@ import { auth } from "@/config/firebase.config";
 import { useAuthStore } from "@/store";
 import { browserSessionPersistence, setPersistence, signInWithEmailAndPassword } from "firebase/auth";
 
-export const signInWithPersistence= async(email:string,pwd:string)=>{
+export const signIn= async(email:string,pwd:string)=>{
 
   try {
     // Set session persistence for this auth session
-    await setPersistence(auth, browserSessionPersistence);
+    //await setPersistence(auth, browserSessionPersistence);
 
     // Perform sign-in
     const userCredential = await signInWithEmailAndPassword(auth, email, pwd);console.log("User credential after sign-in:", userCredential); // Add this line
 
-    const setUser = useAuthStore.getState().setCurrentUser
-// setUser?.(userCredential.user)
+
 
 
     // Return the user object if successful
-    return { user: userCredential.user, error: null };
+    return { user: userCredential.user, errorMsg: null,errorCode:null };
   } catch (error:any) {
     // Return error message if login fails
-    return { user: null, error: error.message};
+    return { user: null, errorMessage: error.message,errorCode:error.code};
   }
 };

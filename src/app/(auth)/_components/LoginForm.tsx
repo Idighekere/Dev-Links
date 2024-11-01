@@ -7,7 +7,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-
 // import { toast } from "@/components/hooks/use-toast"
 import { Button } from '@/components/ui/button'
 import {
@@ -24,7 +23,7 @@ import { useUserStore, useAuthStore } from '@/store'
 
 import { showToastSuccess, showToastError } from '@/utils/showToast'
 import { Envelope, Lock } from '@/components/icons'
-import { signInWithPersistence } from '../_auth'
+import { signIn } from '../_auth'
 const FormSchema = z.object({
   email: z
     .string({
@@ -57,56 +56,72 @@ const LoginForm = (props: Props) => {
 
   const [formData, setFormData] = useState(formDefaultValues)
 
-  async function onSubmit (data: z.infer<typeof FormSchema>) {
-    setLoading(true)
-    const { user, error } = await signInWithPersistence(
-      data.email,
-      data.password
-    )
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+  try {
+    setLoading(true);
 
-    if (user) {
-      useAuthStore.getState().setCurrentUser?.({
-        uid: user.uid,
-        email: user.email,
-        displayName: user.displayName
-      })
-      console.log(useAuthStore.getState().currentUser)
-      showToastSuccess('Logged in successfully!')
-      router.push('/dashboard/links')
-    } else {
-      const errorCode = error.code
-      let errorMessage = error.message
-      switch (errorCode) {
-        case 'auth/invalid-email':
-          setErrorMsg('Please enter a valid email address.')
-          break
-        case 'auth/wrong-password':
-          setErrorMsg('Incorrect password. Please try again.')
-          break
-        case 'auth/invalid-credential':
-          setErrorMsg('Incorrect email or password')
-          break
-        case 'auth/user-not-found':
-          setErrorMsg('No user found with this email address.')
-          break
-        case 'auth/too-many-requests':
-          setErrorMsg('Too many requests. Please try again later.')
-          break
-        case 'auth/weak-password':
-          setErrorMsg('Password is too weak. Please use a stronger password.')
-          break
-        default:
-          setErrorMsg(errorMessage)
-      }
+    // Attempt sign in
+    const { user, errorMessage, errorCode } = await signIn(data.email, data.password);
 
-      console.error(`${errorCode}, ${errorMessage}`)
-      showToastError(`Login failed`)
-
-      setErrorMsg(error) // Set the error message if login fails
+    if (!user) {
+      console.error('No user credential');
+      handleAuthErrors(errorCode, errorMessage);
+      return;
     }
-    setLoading(false)
-    //setErrorMsg()
+
+    // Fetch token if user exists
+    const idToken = await user.getIdToken();
+
+    // Login request to backend
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${idToken}`,
+      },
+    });
+
+    // Handle successful login
+    if (response.ok) {
+      router.push('/dashboard/links');
+      showToastSuccess('Logged in successfully!');
+    } else {
+      console.error(`Server error: ${response.statusText}`);
+      showToastError('Login failed');
+    }
+  } catch (error) {
+    console.error('Error during login:', error);
+    showToastError('An error occurred. Please try again.');
+  } finally {
+    setLoading(false);
   }
+}
+
+function handleAuthErrors(errorCode: string, errorMessage: string) {
+  switch (errorCode) {
+    case 'auth/invalid-email':
+      setErrorMsg('Please enter a valid email address.');
+      break;
+    case 'auth/wrong-password':
+      setErrorMsg('Incorrect password. Please try again.');
+      break;
+    case 'auth/invalid-credential':
+      setErrorMsg('Incorrect email or password.');
+      break;
+    case 'auth/user-not-found':
+      setErrorMsg('No user found with this email address.');
+      break;
+    case 'auth/too-many-requests':
+      setErrorMsg('Too many requests. Please try again later.');
+      break;
+    case 'auth/weak-password':
+      setErrorMsg('Password is too weak. Please use a stronger password.');
+      break;
+    default:
+      setErrorMsg(errorMessage || 'Login failed.');
+  }
+}
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target

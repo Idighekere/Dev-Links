@@ -8,7 +8,7 @@ export interface Profile {
 }
 
 export interface ProfileState {
-  profile?: Profile 
+  profile?: Profile
   userData?: any
   hasChanges: boolean
   initialProfile: Profile
@@ -23,6 +23,5 @@ export interface ProfileAction {
   setProfile?: (field: string, value: string) => void
   setImageFile?: (image: File) => void
   setImageURL?: (image: string) => void
-  uploadImage: (imageFile: File) => Promise<void>
   getProfileData: () => Promise<(() => void) | undefined>
 }
