@@ -42,7 +42,7 @@ useEffect(()=>{
   //UPLOAD IMAGE
 
   const logOut = async() => {
-    const response=await fetch("/api/logout",{
+    const response=await fetch(`${window.location.origin}/api/logout`,{
       method:"POST"
     })
 

@@ -22,7 +22,7 @@ export const POST = async (request: NextRequest, response: NextResponse) => {
     try {
       // Verify ID token using Firebase Admin SDK
       decodedToken = await auth().verifyIdToken(idToken)
-      console.log('Decoded Token:', decodedToken)
+      //console.log('Decoded Token:', decodedToken)
     } catch (error) {
       console.error('Error verifying token:', error)
       return NextResponse.json(

@@ -73,7 +73,7 @@ const LoginForm = (props: Props) => {
     const idToken = await user.getIdToken();
 
     // Login request to backend
-    const response = await fetch('/api/login', {
+    const response = await fetch(`${window.location.origin}/api/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
