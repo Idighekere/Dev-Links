@@ -204,7 +204,7 @@ function handleAuthErrors(errorCode: string, errorMessage: string) {
 
         <Button
           type='submit'
-          className='w-full mt-4'
+          className='w-full mt-4 text-xl font-semibold'
           disabled={loading}
           onClick={() => setErrorMsg('')}
         >

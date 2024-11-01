@@ -284,7 +284,7 @@ const [errorMsg,setErrorMsg]=useState("")
                     )}
                 />
                 <>{errorMsg?(<p className="text-red .my-2 ">{errorMsg}</p>):(<p className="py-1 mb-3"></p>)}</>
-                <Button type="submit" className="w-full mt-4" disabled={loading} onClick={()=>setErrorMsg("")}>
+                <Button type="submit" className="w-full mt-4 text-xl font-semibold" disabled={loading} onClick={()=>setErrorMsg("")}>
                     {loading ?("Registering..."):("Register")}
                 </Button>
             </form>
