@@ -34,13 +34,16 @@ const FormSchema = z.object({
     .string({
       required_error: 'Password is required.'
     })
-    .min(6)
+    .min(6,{
+      message:"Password must be atleast 6 characters"
+    })
 })
 
 type Props = {}
 
 const LoginForm = (props: Props) => {
   const [loading, setLoading] = useState(false)
+  const [isInputEmpty,setIsInputEmpty]=useState(true)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const formDefaultValues = {
     email: '',
@@ -195,16 +198,14 @@ function handleAuthErrors(errorCode: string, errorMessage: string) {
           )}
         />
         <>
-          {errorMsg ? (
+          {errorMsg && (
             <p className='text-red /my-2 '>{errorMsg}</p>
-          ) : (
-            <p className='py-2 mb-3'></p>
           )}
         </>
 
         <Button
           type='submit'
-          className='w-full mt-4 text-xl font-semibold'
+          className='w-full mt-4 text-base font-semibold'
           disabled={loading}
           onClick={() => setErrorMsg('')}
         >

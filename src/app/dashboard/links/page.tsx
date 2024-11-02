@@ -9,6 +9,7 @@ import { useUserStore, useLinkStore } from '@/store'
 
 import { db, storage } from '@/config/firebase.config'
 import { doc, getDoc, onSnapshot } from 'firebase/firestore'
+import { showToastWarning } from '@/utils/showToast'
 
 const Links = () => {
   //const [loading, setLoading] = useState(false)
@@ -23,6 +24,12 @@ const Links = () => {
     getLinkData()
     //console.log("Link rendered")
   }, [])
+
+  useEffect(() => {
+    if (hasChanges) {
+      showToastWarning("You have unsaved changes. Don't forget to save!")
+    }
+  }, [hasChanges])
 
   if (loading) {
     return (

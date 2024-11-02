@@ -288,15 +288,13 @@ const RegisterForm = () => {
           )}
         />
         <>
-          {errorMsg ? (
+          {errorMsg && (
             <p className='text-red .my-2 '>{errorMsg}</p>
-          ) : (
-            <p className='py-1 mb-3'></p>
           )}
         </>
         <Button
           type='submit'
-          className='w-full mt-4 text-xl font-semibold'
+          className='w-full mt-4 text-base font-semibold'
           disabled={loading}
           onClick={() => setErrorMsg('')}
         >

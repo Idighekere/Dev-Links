@@ -8,7 +8,7 @@ export const Contribute = () => {
   return (
     <section className='p-5 md:p-16'>
       <div className='h-full flex justify-between items-center flex-col-reverse md:flex-row gap-10'>
-        <div className='flex flex-col gap-6 w-fullmd:w-1/2'>
+        <div className='flex flex-col gap-6 w-fullmd:w-1/2' data-aos="fade-right">
           <p className=' text-[#1a1a1a]/40 text-lg font-bold '>
             Build. Share. Contribute.
           </p>
@@ -30,7 +30,7 @@ export const Contribute = () => {
             </Link>
           </Button>
         </div>
-        <div className='relative w-full max-h-lg h-96 rounded-full'>
+        <div className='relative w-full max-h-lg h-96 rounded-full' data-aos="fade-left">
           <Image src='/developer_male.jpg' fill alt='Hero Image' className="rounded-full"/>
         </div>
       </div>

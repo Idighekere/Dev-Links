@@ -6,12 +6,12 @@ export const Potentials = () => {
     <section className='flex justify-center items-center /h-screen'>
       <div className='w-full /h-full p-5 md:p-16 bg-white /justify-start items-center gap-16 inline-flex flex-col md:flex-row'>
 
-        <div className=' w-full md:w-1/2 flex justify-center border-borders md:border rounded-md h-full'>
+        <div className=' w-full md:w-1/2 flex justify-center border-borders md:border rounded-md h-full ' data-aos="zoom-in-right">
         <Empty width="350" height="100%"/>
         </div>
 
         <div className='grow shrink basis-0 flex-col justify-start items-start /gap-11 inline-flex'>
-          <div className='flex-col justify-start items-start gap-3 flex'>
+          <div className='flex-col justify-start items-start gap-3 flex' data-aos="zoom-in-left">
             <div className='self-stretch text-dark-grey/40 text-lg font-bold  leading-7'>
               Connect with Your Network
             </div>
@@ -24,7 +24,7 @@ export const Potentials = () => {
               presence effortlessly.
             </p>
           </div>
-          <div className='flex flex-col gap-1 mt-4 w-full'>
+          <div className='flex flex-col gap-1 mt-4 w-full' data-aos="zoom-in-left">
             <Button className=' md:w-auto text-lg font-semibold' size='lg'>
               <a href='/register'>Get Started for Free</a>
             </Button>

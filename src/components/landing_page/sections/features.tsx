@@ -18,6 +18,7 @@ export const Features = () => {
             <div
               key={index}
               className='bg-light-purple rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300'
+              data-aos="zoom-in-up"
             >
               <div className='text-purple text-4xl mb-4 justify-center flex'>
                 {' '}
