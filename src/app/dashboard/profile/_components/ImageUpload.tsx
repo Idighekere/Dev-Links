@@ -19,6 +19,9 @@ import {
   showToastSuccess
 } from '@/utils/showToast'
 import ImagePreview from './ImagePreview'
+import { v4 as uuidv4 } from 'uuid'
+import toast from 'react-hot-toast'
+
 
 type Props = {
   userUid: string | undefined | null
@@ -77,6 +80,8 @@ const ImageUpload = ({ userUid }: Props) => {
     //Upload Image
   }
   const handleUpload = async () => {
+
+    let loadingToastId:string|undefined=uuidv4()
     setUploading(true)
     if (!userUid) {
       console.error('Undefined Uid')
@@ -101,6 +106,9 @@ const ImageUpload = ({ userUid }: Props) => {
     //console.log(imageDimensions)
 
     try {
+      if(!loadingToastId){
+        loadingToastId=toast.loading("Uploading...")
+      }
       if (image) {
         await uploadBytes(imageRef, image)
         const url = await getDownloadURL(imageRef)
@@ -114,17 +122,22 @@ const ImageUpload = ({ userUid }: Props) => {
       //console.log('Uploaded')
 
       //setImage(null)
-    } catch (error) {
+     // toast.dismiss(loadingToastId)
+      loadingToastId = undefined
+    } catch (error:any) {
       console.error(error)
+     showToastError(error)
     } finally {
+      toast.dismiss(loadingToastId)
+
       showToastSuccess('Image upload success!')
       setUploading(false)
     }
   }
 
-  if (uploading) {
-    showToastLoading('Uploading...')
-  }
+  // if (uploading) {
+  //   showToastLoading('Uploading...')
+  // }
   return (
     <div className='flex flex-col gap-2'>
       <Input

@@ -8,6 +8,10 @@ export async function middleware(request: NextRequest, response: NextResponse) {
   if (!session) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
+  // if(request.nextUrl.pathname === "/login" && session){
+  //   return NextResponse.redirect(new URL("/dashboard/links",request.url))
+
+  // }
 
   //Call the authentication endpoint
   const responseAPI = await fetch(`${request.nextUrl.origin}/api/login`, {

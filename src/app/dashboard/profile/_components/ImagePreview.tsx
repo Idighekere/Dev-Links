@@ -10,6 +10,8 @@ type Props = {
 }
 
 const ImagePreview = ({ blobUrl, onClick, profileImageUrl,image }: Props) => {
+
+  const selectedImageUrl=(image ? blobUrl : profileImageUrl) || ""
   return (
     <div
       className='mt-2 bg-light-purple relative w-40 h-40 rounded-md p-5 flex items-center cursor-pointer select-none'
@@ -17,7 +19,7 @@ const ImagePreview = ({ blobUrl, onClick, profileImageUrl,image }: Props) => {
     >
       {(blobUrl||profileImageUrl) && (
         <Image
-          src={image ? blobUrl : profileImageUrl || ''}
+          src={selectedImageUrl}
           alt='Preview'
           fill
           className={`
