@@ -26,6 +26,11 @@ const Login = (props: Props) => {
             <CardTitle className="text-[2rem] font-[700]">Login</CardTitle>
             <CardDescription className="text-base ">
               Add your details below to get back into the app
+                <div > 
+                   <h3 className="font-bold text-xl">Testing Login Details</h3>
+                   <p><strong>Email:</strong> testuser1@gmail.com </p>
+                   <p><strong>Password:</strong> Testone$123 </p>
+                </div>
             </CardDescription>
           </CardHeader>
           <CardContent>
